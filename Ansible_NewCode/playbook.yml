@@ -1,0 +1,23 @@
+- name: Node.js application with MongoDB
+  hosts: localhost
+  become: true
+  vars_files:
+    - ./variables.yml
+  vars:
+    container_names:
+      - mongo_db
+      - node-app
+      - ubuntu-target-vm
+  roles:
+    - initialize_mongoDB_with_sample_data
+    - Set_configuration_env_vars
+    - Monitoring
+    - Create_backup
+
+- name: Copy application to target server
+  hosts: target_servers
+  become: true
+     
+  roles:
+    - copy_app_to_target_env
+  

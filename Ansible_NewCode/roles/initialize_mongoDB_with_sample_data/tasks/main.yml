@@ -1,0 +1,37 @@
+- name: Ensure MongoDB is running
+  docker_container:
+    name: mongo_db
+    state: started
+    restart_policy: unless-stopped
+
+- name: Initialize database with sample data
+  command: >
+    docker exec mongo_db mongosh mydatabase --eval "
+    db.myCollection.drop(); 
+    db.myCollection.insertMany([
+        {
+            name: 'John Doe', 
+            id: 1, 
+            email: 'john.doe@example.com' 
+        },
+        { 
+            name: 'Jane Smith', 
+            id: 2, 
+            email: 'jane.smith@example.com' 
+        },
+        { 
+            name: 'Alice Johnson', 
+            id: 3, 
+            email: 'alice.johnson@example.com' 
+        }    
+    ]);"
+
+- name: Debug the sample data 
+  command: >
+    docker exec mongo_db mongosh mydatabase --eval "db.myCollection.find().pretty();"
+  register: debug_output
+
+- name: Show debug output
+  debug: 
+    var: debug_output.stdout  
+

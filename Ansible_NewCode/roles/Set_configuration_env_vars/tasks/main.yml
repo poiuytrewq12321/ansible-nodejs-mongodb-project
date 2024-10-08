@@ -1,0 +1,17 @@
+- name: Create the .env file from template
+  template:
+    src: /home/sweetyj/Ansibleteamproject/Ansible_NewCode/templates/env.j2
+    dest: /home/sweetyj/Ansibleteamproject/Application/NodeJS_app/.env
+    owner: sweetyj
+    group: sweetyj
+    mode: '0644'
+    force: yes
+
+- name: Debug the generated file
+  command: cat /home/sweetyj/Ansibleteamproject/Application/NodeJS_app/.env
+  register: env_file_output
+
+- name: Show the .env file content
+  debug: 
+    var: env_file_output.stdout
+  

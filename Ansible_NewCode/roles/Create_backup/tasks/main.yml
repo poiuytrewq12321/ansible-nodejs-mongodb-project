@@ -1,0 +1,17 @@
+- name: Ensure backup directory exists
+  file:
+    path: /home/sweetyj/Ansibleteamproject/Ansible_NewCode/backup
+    state: directory
+    mode: '0755'
+
+- name: Backup MongoDB data using mongodump
+  command: >
+    docker exec mongo_db mongodump --archive=/tmp/mongo_backup_{{ ansible_date_time.iso8601_basic }}.gz --gzip
+
+- name: Copy backup from container to host
+  command: >
+    docker cp mongo_db:/tmp/mongo_backup_{{ ansible_date_time.iso8601_basic }}.gz /home/sweetyj/Ansibleteamproject/Ansible_NewCode/backup/mongo_backup_{{ ansible_date_time.iso8601_basic }}.gz
+
+- name: Clean up temporary backup file in container
+  command: >
+    docker exec mongo_db rm /tmp/mongo_backup_{{ ansible_date_time.iso8601_basic }}.gz

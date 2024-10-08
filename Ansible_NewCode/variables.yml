@@ -1,0 +1,6 @@
+#variables
+NODE_ENV: "production"
+PORT: 3005
+MONGO_URI: "mongodb://mongo:28018/mydatabase"
+
+

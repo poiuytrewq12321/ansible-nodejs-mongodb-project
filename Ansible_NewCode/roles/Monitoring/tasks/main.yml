@@ -1,0 +1,11 @@
+- name: List all running Docker containers
+  command: docker ps
+  register: running_containers
+  changed_when: false
+- name: Check if specified containers are running
+  debug:
+    msg: "{{ item }} is running."
+  loop: "{{ container_names }}"
+  when: item in running_containers.stdout_lines | join(' ')
+
+

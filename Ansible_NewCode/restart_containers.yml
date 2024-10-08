@@ -1,0 +1,26 @@
+- name: Start/ Stop containers
+  hosts: localhost
+  tasks:
+    - name: Start node-app container
+      docker_container:
+        name: "node-app"
+        state: started
+      when: action == 'start'
+    - name: Start mongo_db container
+      docker_container:
+        name: "mongo_db"
+        state: started
+      when: action == 'start'
+
+    - name: Stop node-app container
+      docker_container:
+        name: "node-app"
+        state: stopped
+      when: action == 'stop'
+
+    - name: Stop mongo_db container
+      docker_container:
+        name: "mongo_db"
+        state: stopped
+      when: action == 'stop'
+        

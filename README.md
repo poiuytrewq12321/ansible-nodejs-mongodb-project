@@ -31,8 +31,10 @@
 
 
 Commands to run the playbook
-cd /home/sweetyj/Ansibleteamproject/Ansible_NewCode
+
 ansible-playbook -i inventory.ini playbook.yml --ask-become-pass
+
+
 Playbook Execution steps: 
 When we execute the Ansible playbook, a series of tasks are performed in a defined order to ensure that your Node.js application and MongoDB database are properly configured and managed. Below are the steps executed by each role included in the playbook: 
 
